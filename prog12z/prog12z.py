@@ -2,7 +2,11 @@
 """
 ucanSystec.py
 Author: SMFSW
-Copyright (c) 2016 SMFSW
+Version: 1.0
+Copyright (c) 2016-2017 SMFSW
+
+v0.1: python 2 release
+v1.0: script compatible with python 2 & 3
 
 The MIT License (MIT)
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,8 +32,8 @@ import os
 # from _winreg import *
 
 
-# Liste des path où chercher l'exe
-# penser aux "" lorsqu'il y a des espaces dans le chemin et penser à echapper les char \"
+# Paths lists where to find exe
+# think about "" when spaces are in the path & special characters escaping with \
 p12z_lst = ['C:\\PEMicro\\PROG12Z\\cprog12z.exe',
             '\"C:\\Program Files\\PEMicro\\cprog12z.exe\"',
             '\"C:\\Program Files (x86)\\PEMicro\\cprog12z.exe\"']
@@ -62,12 +66,12 @@ def launch_cmd():
     #     if keyname[0] == 'InstallPath':
     #         p12z = keyname[1]
     #         p12z += "\\PROG12Z\\cprog12z.exe"
-    #         # print p12z
+    #         # print(p12z)
     #         p12z += " {} Interface={} port=USB1 freq 16000000".format(cfg_file, interface)
     #         ret = os.system(p12z)
-    #         print "Error {}: {}".format(ret, err_dict.get(ret))
+    #         print("Error {}: {}".format(ret, err_dict.get(ret)))
     # except WindowsError:
-    #     print "sorry, but you should install PEmicro first!\nExiting"
+    #     print("sorry, but you should install PEmicro first!\nExiting")
     #     exit(-1)
 
     for i, filepath in enumerate(p12z_lst):
@@ -75,26 +79,26 @@ def launch_cmd():
             p12z = filepath
             p12z += " {} Interface={} port=USB1 freq 16000000".format(cfg_file, interface)
             ret = os.system(p12z)
-            print "Error {}: {}".format(ret, err_dict.get(ret))
+            print("Error {}: {}".format(ret, err_dict.get(ret)))
             break   # break for when found
 
     if p12z == "":
-        print "sorry, but you should install PEmicro first!\nExiting"
+        print("sorry, but you should install PEmicro first!\nExiting")
 
 
 def set_task():
     """ prompt for task """
     global task, cfg_file
 
-    print "Choose task:"
-    for k, txt in task_dict.iteritems():
-        print "{}: {}".format(k, txt)
+    print("Choose task:")
+    for k, txt in task_dict.items():
+        print("{}: {}".format(k, txt))
     task = int(input("$>"))
     try:
         assert task > 0
         assert task <= len(task_dict)
     except AssertionError:
-        print "out of range, try again!"
+        print("out of range, try again!")
     else:
         if task == 1:
             cfg_file = "cprog12w.cfg"
@@ -110,15 +114,15 @@ def set_interface():
     """ prompt for interface """
     global interface
 
-    print "Choose interface:"
-    for k, txt in interface_dict.iteritems():
-        print "{}: {}".format(k, txt)
+    print("Choose interface:")
+    for k, txt in interface_dict.items():
+        print("{}: {}".format(k, txt))
     tmp_interface = int(input("$>"))
     try:
         assert tmp_interface > 0
         assert tmp_interface <= len(interface_dict)
     except AssertionError:
-        print "out of range, try again!"
+        print("out of range, try again!")
     else:
         if tmp_interface == 5:
             exit(0)
@@ -135,13 +139,13 @@ def hash_check():
             command = "fsum.exe -c -js -s s19.sfv"
             ret = os.system(command)
             if ret == 1:
-                print "s19 file(s) corrupted.\nExit"
+                print("s19 file(s) corrupted.\nExit")
                 exit(-1)
         else:
-            print "s19.sfv file empty.\nContinue without hash check..."
+            print("s19.sfv file empty.\nContinue without hash check...")
             pass
     except:
-        print "fsum.exe not found!\nContinue without hash check..."
+        print("fsum.exe not found!\nContinue without hash check...")
 
 
 err_dict = {0: "Program completed with no errors.\nFLASHING IS DONE!!!",

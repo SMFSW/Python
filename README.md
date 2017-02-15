@@ -1,5 +1,5 @@
 # Python
 All python projects
 
-prog12z:
-script for PEMicro launch (prog / dump)
+## prog12z:
+script to automate calls to PEMicro prog12z (for prog / dump)
